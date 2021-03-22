@@ -1,0 +1,29 @@
+﻿<Window x:Class="GestionMatetMob.Formulaire.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:GestionMatetMob.Formulaire"
+        mc:Ignorable="d"
+        Title="Login" Height="450" Width="800"  WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+    <Grid >
+        <Label x:Name="Label" Content="Nom D'utilisateur : " HorizontalAlignment="Left" Margin="324,97,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1" Content="Mot de Passe : " HorizontalAlignment="Left" Margin="324,203,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="NomTb" HorizontalAlignment="Left" Height="23" materialDesign:HintAssist.Hint="pseudo" Margin="499,100,0,0"  VerticalAlignment="Top" Width="120"/>
+        <PasswordBox x:Name="MdpTb" HorizontalAlignment="Left"  materialDesign:HintAssist.Hint="********" Height="23" Margin="499,206,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="ValBt" Content="Valider" HorizontalAlignment="Left" Margin="434,331,0,0" VerticalAlignment="Top" Width="95" Height="27" Click="button_Click"/>
+        <Button x:Name="EffBt" Content="Tout effacer" HorizontalAlignment="Left" Margin="544,251,0,0" VerticalAlignment="Top" Width="111" BorderThickness="1"  Click="EffBt_Click" Height="25"/>
+        <Image x:Name="image" Source="C:\Users\USER\Desktop\GestionMaterieletMobilierdeBu\GestionMatetMob\images\key_password_lock_800.ico" Height="297" Margin="31,61,492,0" VerticalAlignment="Top"/>
+
+        <StackPanel Width="100"  HorizontalAlignment="Right">
+            <Button Margin="10 20" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="{x:Null}"
+                 ToolTip="Close" x:Name="quit" Click="btnExit_Click">
+                <materialDesign:PackIcon Kind="Close" Foreground="red" Width="30" Height="30" />
+            </Button>
+        </StackPanel>
+
+
+
+    </Grid>
+</Window>

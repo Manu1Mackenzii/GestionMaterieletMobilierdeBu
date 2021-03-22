@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Gestion_MaterielModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Affectation">
+          <Key>
+            <PropertyRef Name="code_affect" />
+          </Key>
+          <Property Name="code_affect" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code_article" Type="int" Nullable="false" />
+          <Property Name="code_service" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="code_article" />
+          </Key>
+          <Property Name="code_article" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="libelle_article" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="id_categorie" Type="int" Nullable="false" />
+          <Property Name="code_caract" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Caracteristique">
+          <Key>
+            <PropertyRef Name="code_caract" />
+          </Key>
+          <Property Name="code_caract" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prix" Type="float" Nullable="false" />
+          <Property Name="quantité" Type="int" Nullable="false" />
+          <Property Name="etat" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="date_acquisition" Type="datetime" Nullable="false" />
+          <Property Name="date_mis_ser" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="id_categorie" />
+          </Key>
+          <Property Name="id_categorie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="libelle_categorie" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Direction">
+          <Key>
+            <PropertyRef Name="code_direction" />
+          </Key>
+          <Property Name="code_direction" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom_direction" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="code_service" />
+          </Key>
+          <Property Name="code_service" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom_service" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="responsable" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="localisation" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="code_direction" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Utilisateurs">
+          <Key>
+            <PropertyRef Name="Nom_util" />
+          </Key>
+          <Property Name="Nom_util" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Mot_de_passe" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Affectati__code___1A14E395">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Affectation" Type="Self.Affectation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="code_article" />
+            </Principal>
+            <Dependent Role="Affectation">
+              <PropertyRef Name="code_article" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Affectati__code___1B0907CE">
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="Affectation" Type="Self.Affectation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="code_service" />
+            </Principal>
+            <Dependent Role="Affectation">
+              <PropertyRef Name="code_service" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Article__code_ca__1BFD2C07">
+          <End Role="Caracteristique" Type="Self.Caracteristique" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Caracteristique">
+              <PropertyRef Name="code_caract" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="code_caract" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Article__id_cate__1CF15040">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="id_categorie" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="id_categorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service__code_di__1DE57479">
+          <End Role="Direction" Type="Self.Direction" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direction">
+              <PropertyRef Name="code_direction" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="code_direction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Gestion_MaterielModelStoreContainer">
+          <EntitySet Name="Affectation" EntityType="Self.Affectation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Caracteristique" EntityType="Self.Caracteristique" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Direction" EntityType="Self.Direction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateurs" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Affectati__code___1A14E395" Association="Self.FK__Affectati__code___1A14E395">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Affectation" EntitySet="Affectation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Affectati__code___1B0907CE" Association="Self.FK__Affectati__code___1B0907CE">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="Affectation" EntitySet="Affectation" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Article__code_ca__1BFD2C07" Association="Self.FK__Article__code_ca__1BFD2C07">
+            <End Role="Caracteristique" EntitySet="Caracteristique" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Article__id_cate__1CF15040" Association="Self.FK__Article__id_cate__1CF15040">
+            <End Role="Categorie" EntitySet="Categorie" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service__code_di__1DE57479" Association="Self.FK__Service__code_di__1DE57479">
+            <End Role="Direction" EntitySet="Direction" />
+            <End Role="Service" EntitySet="Service" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Gestion_MaterielModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Affectation">
+          <Key>
+            <PropertyRef Name="code_affect" />
+          </Key>
+          <Property Name="code_affect" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code_article" Type="Int32" Nullable="false" />
+          <Property Name="code_service" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Self.FK__Affectati__code___1A14E395" FromRole="Affectation" ToRole="Article" />
+          <NavigationProperty Name="Service" Relationship="Self.FK__Affectati__code___1B0907CE" FromRole="Affectation" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="code_article" />
+          </Key>
+          <Property Name="code_article" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="libelle_article" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_categorie" Type="Int32" Nullable="false" />
+          <Property Name="code_caract" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Affectations" Relationship="Self.FK__Affectati__code___1A14E395" FromRole="Article" ToRole="Affectation" />
+          <NavigationProperty Name="Caracteristique" Relationship="Self.FK__Article__code_ca__1BFD2C07" FromRole="Article" ToRole="Caracteristique" />
+          <NavigationProperty Name="Categorie" Relationship="Self.FK__Article__id_cate__1CF15040" FromRole="Article" ToRole="Categorie" />
+        </EntityType>
+        <EntityType Name="Caracteristique">
+          <Key>
+            <PropertyRef Name="code_caract" />
+          </Key>
+          <Property Name="code_caract" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prix" Type="Double" Nullable="false" />
+          <Property Name="quantité" Type="Int32" Nullable="false" />
+          <Property Name="etat" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="date_acquisition" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="date_mis_ser" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK__Article__code_ca__1BFD2C07" FromRole="Caracteristique" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="id_categorie" />
+          </Key>
+          <Property Name="id_categorie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="libelle_categorie" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK__Article__id_cate__1CF15040" FromRole="Categorie" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="Direction">
+          <Key>
+            <PropertyRef Name="code_direction" />
+          </Key>
+          <Property Name="code_direction" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom_direction" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Services" Relationship="Self.FK__Service__code_di__1DE57479" FromRole="Direction" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="code_service" />
+          </Key>
+          <Property Name="code_service" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom_service" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="responsable" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="localisation" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="code_direction" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Affectations" Relationship="Self.FK__Affectati__code___1B0907CE" FromRole="Service" ToRole="Affectation" />
+          <NavigationProperty Name="Direction" Relationship="Self.FK__Service__code_di__1DE57479" FromRole="Service" ToRole="Direction" />
+        </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="Nom_util" />
+          </Key>
+          <Property Name="Nom_util" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Mot_de_passe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Affectati__code___1A14E395">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="Affectation" Type="Self.Affectation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="code_article" />
+            </Principal>
+            <Dependent Role="Affectation">
+              <PropertyRef Name="code_article" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Affectati__code___1B0907CE">
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="Affectation" Type="Self.Affectation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="code_service" />
+            </Principal>
+            <Dependent Role="Affectation">
+              <PropertyRef Name="code_service" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Article__code_ca__1BFD2C07">
+          <End Role="Caracteristique" Type="Self.Caracteristique" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Caracteristique">
+              <PropertyRef Name="code_caract" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="code_caract" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Article__id_cate__1CF15040">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="id_categorie" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="id_categorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Service__code_di__1DE57479">
+          <End Role="Direction" Type="Self.Direction" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direction">
+              <PropertyRef Name="code_direction" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="code_direction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Gestion_MaterielEntitie" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Affectations" EntityType="Self.Affectation" />
+          <EntitySet Name="Articles" EntityType="Self.Article" />
+          <EntitySet Name="Caracteristiques" EntityType="Self.Caracteristique" />
+          <EntitySet Name="Categories" EntityType="Self.Categorie" />
+          <EntitySet Name="Directions" EntityType="Self.Direction" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateur" />
+          <AssociationSet Name="FK__Affectati__code___1A14E395" Association="Self.FK__Affectati__code___1A14E395">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="Affectation" EntitySet="Affectations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Affectati__code___1B0907CE" Association="Self.FK__Affectati__code___1B0907CE">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="Affectation" EntitySet="Affectations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Article__code_ca__1BFD2C07" Association="Self.FK__Article__code_ca__1BFD2C07">
+            <End Role="Caracteristique" EntitySet="Caracteristiques" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Article__id_cate__1CF15040" Association="Self.FK__Article__id_cate__1CF15040">
+            <End Role="Categorie" EntitySet="Categories" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Service__code_di__1DE57479" Association="Self.FK__Service__code_di__1DE57479">
+            <End Role="Direction" EntitySet="Directions" />
+            <End Role="Service" EntitySet="Services" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Gestion_MaterielModelStoreContainer" CdmEntityContainer="Gestion_MaterielEntitie">
+          <EntitySetMapping Name="Affectations">
+            <EntityTypeMapping TypeName="Gestion_MaterielModel.Affectation">
+              <MappingFragment StoreEntitySet="Affectation">
+                <ScalarProperty Name="code_affect" ColumnName="code_affect" />
+                <ScalarProperty Name="code_article" ColumnName="code_article" />
+                <ScalarProperty Name="code_service" ColumnName="code_service" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="Gestion_MaterielModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="code_article" ColumnName="code_article" />
+                <ScalarProperty Name="libelle_article" ColumnName="libelle_article" />
+                <ScalarProperty Name="id_categorie" ColumnName="id_categorie" />
+                <ScalarProperty Name="code_caract" ColumnName="code_caract" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Caracteristiques">
+            <EntityTypeMapping TypeName="Gestion_MaterielModel.Caracteristique">
+              <MappingFragment StoreEntitySet="Caracteristique">
+                <ScalarProperty Name="code_caract" ColumnName="code_caract" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="quantité" ColumnName="quantité" />
+                <ScalarProperty Name="etat" ColumnName="etat" />
+                <ScalarProperty Name="date_acquisition" ColumnName="date_acquisition" />
+                <ScalarProperty Name="date_mis_ser" ColumnName="date_mis_ser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="Gestion_MaterielModel.Categorie">
+              <MappingFragment StoreEntitySet="Categorie">
+                <ScalarProperty Name="id_categorie" ColumnName="id_categorie" />
+                <ScalarProperty Name="libelle_categorie" ColumnName="libelle_categorie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Directions">
+            <EntityTypeMapping TypeName="Gestion_MaterielModel.Direction">
+              <MappingFragment StoreEntitySet="Direction">
+                <ScalarProperty Name="code_direction" ColumnName="code_direction" />
+                <ScalarProperty Name="nom_direction" ColumnName="nom_direction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="Gestion_MaterielModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="code_service" ColumnName="code_service" />
+                <ScalarProperty Name="nom_service" ColumnName="nom_service" />
+                <ScalarProperty Name="responsable" ColumnName="responsable" />
+                <ScalarProperty Name="localisation" ColumnName="localisation" />
+                <ScalarProperty Name="code_direction" ColumnName="code_direction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilisateurs">
+            <EntityTypeMapping TypeName="Gestion_MaterielModel.Utilisateur">
+              <MappingFragment StoreEntitySet="Utilisateurs">
+                <ScalarProperty Name="Nom_util" ColumnName="Nom_util" />
+                <ScalarProperty Name="Mot_de_passe" ColumnName="Mot_de_passe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
